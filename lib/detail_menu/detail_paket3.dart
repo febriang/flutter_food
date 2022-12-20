@@ -1,0 +1,406 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_food/themes.dart';
+import 'package:flutter_food/models/size.dart';
+import 'package:flutter_food/widgets/size_card.dart';
+import 'package:flutter_food/screen/payment.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+class DetailPaket3 extends StatefulWidget {
+  const DetailPaket3({Key? key}) : super(key: key);
+
+  @override
+  State<DetailPaket3> createState() => _DetailPaket3();
+}
+
+class _DetailPaket3 extends State<DetailPaket3> {
+  launchUrl(String url) async {
+    launch(url);
+  }
+
+  int i = 1;
+
+  int dataPrice = 30000;
+  int dataPricePromo = 26000;
+
+  int price = 30000;
+  int pricePromo = 26000;
+
+  bool isMini = true;
+  bool isSedang = false;
+  bool isBesar = false;
+  bool isSuperBesar = false;
+
+  void _minus() {
+    setState(() {
+      if (i > 1) {
+        i--;
+        if (isMini == true) {
+          price = dataPrice * i;
+          pricePromo = dataPricePromo * i;
+        } else if (isSedang == true) {
+          price = (dataPrice + 2000) * i;
+          pricePromo = (dataPricePromo + 2000) * i;
+        } else if (isBesar == true) {
+          price = (dataPrice + 4000) * i;
+          pricePromo = (dataPricePromo + 4000) * i;
+        } else if (isSuperBesar == true) {
+          price = (dataPrice + 6000) * i;
+          pricePromo = (dataPricePromo + 6000) * i;
+        }
+      }
+    });
+  }
+
+  void _plus() {
+    setState(() {
+      i++;
+
+      if (isMini == true) {
+        price = dataPrice * i;
+        pricePromo = dataPricePromo * i;
+      } else if (isSedang == true) {
+        price = (dataPrice + 2000) * i;
+        pricePromo = (dataPricePromo + 2000) * i;
+      } else if (isBesar == true) {
+        price = (dataPrice + 4000) * i;
+        pricePromo = (dataPricePromo + 4000) * i;
+      } else if (isSuperBesar == true) {
+        price = (dataPrice + 6000) * i;
+        pricePromo = (dataPricePromo + 6000) * i;
+      }
+    });
+  }
+
+  void _clickMini() {
+    setState(() {
+      price = dataPrice * i;
+      pricePromo = dataPricePromo * i;
+
+      isMini = true;
+      isSedang = false;
+      isBesar = false;
+      isSuperBesar = false;
+    });
+  }
+
+  void _clickSedang() {
+    setState(() {
+      price = (dataPrice + 2000) * i;
+      pricePromo = (dataPricePromo + 2000) * i;
+      isMini = false;
+      isSedang = true;
+      isBesar = false;
+      isSuperBesar = false;
+    });
+  }
+
+  void _clickBesar() {
+    setState(() {
+      price = (dataPrice + 4000) * i;
+      pricePromo = (dataPricePromo + 4000) * i;
+      isMini = false;
+      isSedang = false;
+      isBesar = true;
+      isSuperBesar = false;
+    });
+  }
+
+  void _clickSuperBesar() {
+    setState(() {
+      price = (dataPrice + 6000) * i;
+      pricePromo = (dataPricePromo + 6000) * i;
+      isMini = false;
+      isSedang = false;
+      isBesar = false;
+      isSuperBesar = true;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Image.asset(
+              'assets/pic4.png',
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.cover,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Image.asset('assets/btn_back.png', width: 40),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Image.asset('assets/btn_share.png', width: 40),
+                  ),
+                ],
+              ),
+            ),
+            ListView(
+              children: [
+                const SizedBox(height: 264),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(30),
+                    ),
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 30,
+                          horizontal: 24,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Image.asset(
+                                  'assets/promo.png',
+                                  width: 60,
+                                ),
+                                SizedBox(width: 10,),
+                                Image.asset(
+                                  'assets/terlaris.png',
+                                  width: 60,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Text(
+                                  'Burger Paket 3',
+                                  style: poppinsTextStyle.copyWith(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w500,
+                                    color: blackColor,
+                                  ),
+                                ),
+                                const Spacer(),
+                                InkWell(
+                                  onTap: _minus,
+                                  child: Image.asset(
+                                    'assets/minus.png',
+                                    width: 34,
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Text(
+                                  '$i',
+                                  style: poppinsTextStyle.copyWith(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w500,
+                                    color: blackColor,
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                InkWell(
+                                  onTap: _plus,
+                                  child: Image.asset(
+                                    'assets/plus.png',
+                                    width: 34,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              children: [
+                                Text(
+                                  NumberFormat.currency(
+                                          locale: 'id',
+                                          symbol: 'Rp ',
+                                          decimalDigits: 0)
+                                      .format(price),
+                                  style: poppinsTextStyle.copyWith(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: greyColor,
+                                    decoration: TextDecoration.lineThrough,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  NumberFormat.currency(
+                                          locale: 'id',
+                                          symbol: 'Rp ',
+                                          decimalDigits: 0)
+                                      .format(pricePromo),
+                                  style: poppinsTextStyle.copyWith(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: yellowColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 18),
+                            Text(
+                              'Pilih Ukuran',
+                              style: poppinsTextStyle.copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: blackColor,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                InkWell(
+                                  onTap: _clickMini,
+                                  child: SizeCard(
+                                    Size(
+                                      id: 1,
+                                      name: 'Mini',
+                                      isActive: isMini,
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: _clickSedang,
+                                  child: SizeCard(
+                                    Size(
+                                      id: 2,
+                                      name: 'Sedang',
+                                      isActive: isSedang,
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: _clickBesar,
+                                  child: SizeCard(
+                                    Size(
+                                      id: 3,
+                                      name: 'Besar',
+                                      isActive: isBesar,
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: _clickSuperBesar,
+                                  child: SizeCard(
+                                    Size(
+                                      id: 4,
+                                      name: 'Super Besar',
+                                      isActive: isSuperBesar,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 18),
+                            Text(
+                              'Catatan Penjual',
+                              style: poppinsTextStyle.copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: blackColor,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            // ignore: sized_box_for_whitespace
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: Text(
+                                'Pembelian diatas 5  item bonus satu burger promo berlaku hanya pengiriman radius 2 KM setiap pembelian mendapat 1 kupon burger 10 kupon burger bisa ditukar dengan 1 burger',
+                                style: poppinsTextStyle.copyWith(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w300,
+                                  color: greyColor,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 18),
+                            Text(
+                              'Lokasi BurgerKita',
+                              style: poppinsTextStyle.copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: blackColor,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            InkWell(
+                              onTap: () {
+                                launch('https://goo.gl/maps/hfzaswYBHTkiYSLw5');
+                              },
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/store.png',
+                                    width: 50,
+                                  ),
+                                  const SizedBox(width: 18),
+                                  Text(
+                                    'Jl. Prof. Sudarto, Tembalang\nSemarang, Jawa Tengah',
+                                    style: poppinsTextStyle.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: greyColor,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.chevron_right,
+                                      color: greyColor,
+                                      size: 30,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            // ignore: sized_box_for_whitespace
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              // ignore: deprecated_member_use
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: yellowColor, // background (button) color
+                                  foregroundColor: whiteColor, // foreground (text) color
+                                  
+                                ),
+                                onPressed: () {
+                                  Navigator.push(context,MaterialPageRoute(builder: (context) => Payment()));
+                                },
+                                child: Text(
+                                  'Beli',
+                                  style: poppinsTextStyle.copyWith(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
